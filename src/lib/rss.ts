@@ -66,7 +66,13 @@ function extractCDATA(block: string, tag: string): string {
 }
 
 export async function fetchFeed(): Promise<FeedItem[]> {
-  const response = await fetch("https://expo.dev/changelog/rss.xml");
+  // On web, use the API route proxy to avoid CORS issues.
+  // On native, fetch the RSS feed directly.
+  const url =
+    process.env.EXPO_OS === "web"
+      ? "/api/feed"
+      : "https://expo.dev/changelog/rss.xml";
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch feed: ${response.status}`);
   }

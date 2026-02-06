@@ -74,17 +74,15 @@ export default function ArticleScreen() {
         contentContainerStyle={{ paddingBottom: 64 }}
       >
         {item.thumbnail && (
-          <Link.AppleZoomTarget>
-            <Image
-              source={{ uri: item.thumbnail + "?w=1200&h=675" }}
-              style={{
-                width: "100%",
-                aspectRatio: 16 / 9,
-              }}
-              contentFit="cover"
-              transition={300}
-            />
-          </Link.AppleZoomTarget>
+          <Image
+            source={{ uri: item.thumbnail }}
+            style={{
+              width: "100%",
+              aspectRatio: 16 / 9,
+            }}
+            contentFit="cover"
+            transition={300}
+          />
         )}
 
         <View style={{ padding: 20, gap: 16 }}>

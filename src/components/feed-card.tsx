@@ -9,7 +9,7 @@ export default function FeedCard({ item }: { item: FeedItem }) {
 
   return (
     <Link href={`/article/${encodeURIComponent(item.id)}`} asChild>
-      <Link.Trigger withAppleZoom>
+      <Link.Trigger>
         <Pressable
           style={({ pressed }) => ({
             opacity: pressed ? 0.9 : 1,
@@ -20,17 +20,15 @@ export default function FeedCard({ item }: { item: FeedItem }) {
           })}
         >
           {hasImage && (
-            <Link.AppleZoom>
-              <Image
-                source={{ uri: item.thumbnail! + "?w=800&h=450" }}
-                style={{
-                  width: "100%",
-                  aspectRatio: 16 / 9,
-                }}
-                contentFit="cover"
-                transition={200}
-              />
-            </Link.AppleZoom>
+            <Image
+              source={{ uri: item.thumbnail! }}
+              style={{
+                width: "100%",
+                aspectRatio: 16 / 9,
+              }}
+              contentFit="cover"
+              transition={200}
+            />
           )}
 
           <View style={{ padding: 14, gap: 6 }}>
@@ -126,8 +124,6 @@ export default function FeedCard({ item }: { item: FeedItem }) {
           onPress={() => {}}
         />
       </Link.Menu>
-
-      <Link.Preview />
     </Link>
   );
 }

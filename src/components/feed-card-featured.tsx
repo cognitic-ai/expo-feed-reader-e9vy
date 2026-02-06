@@ -7,7 +7,7 @@ import { FeedItem, formatDate } from "@/lib/rss";
 export default function FeedCardFeatured({ item }: { item: FeedItem }) {
   return (
     <Link href={`/article/${encodeURIComponent(item.id)}`} asChild>
-      <Link.Trigger withAppleZoom>
+      <Link.Trigger>
         <Pressable
           style={({ pressed }) => ({
             opacity: pressed ? 0.9 : 1,
@@ -19,21 +19,21 @@ export default function FeedCardFeatured({ item }: { item: FeedItem }) {
           })}
         >
           {item.thumbnail && (
-            <Link.AppleZoom>
-              <Image
-                source={{ uri: item.thumbnail + "?w=1200&h=675" }}
-                style={{
-                  width: "100%",
-                  aspectRatio: 16 / 9,
-                }}
-                contentFit="cover"
-                transition={300}
-              />
-            </Link.AppleZoom>
+            <Image
+              source={{ uri: item.thumbnail }}
+              style={{
+                width: "100%",
+                aspectRatio: 16 / 9,
+              }}
+              contentFit="cover"
+              transition={300}
+            />
           )}
 
           <View style={{ padding: 16, gap: 8 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+            >
               <Image
                 source="sf:newspaper.fill"
                 style={{
@@ -130,8 +130,6 @@ export default function FeedCardFeatured({ item }: { item: FeedItem }) {
           onPress={() => {}}
         />
       </Link.Menu>
-
-      <Link.Preview />
     </Link>
   );
 }
