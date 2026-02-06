@@ -65,18 +65,27 @@ function extractCDATA(block: string, tag: string): string {
   return match ? match[1].trim() : "";
 }
 
+const RSS_URL = "https://expo.dev/changelog/rss.xml";
+
 export async function fetchFeed(): Promise<FeedItem[]> {
-  // On web, use the API route proxy to avoid CORS issues.
-  // On native, fetch the RSS feed directly.
-  const url =
-    process.env.EXPO_OS === "web"
-      ? "/api/feed"
-      : "https://expo.dev/changelog/rss.xml";
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch feed: ${response.status}`);
+  let xml: string;
+
+  if (process.env.EXPO_OS === "web") {
+    // On web, use a CORS proxy since the RSS feed doesn't serve CORS headers
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`;
+    const response = await fetch(proxyUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch feed: ${response.status}`);
+    }
+    xml = await response.text();
+  } else {
+    const response = await fetch(RSS_URL);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch feed: ${response.status}`);
+    }
+    xml = await response.text();
   }
-  const xml = await response.text();
+
   return extractItems(xml);
 }
 

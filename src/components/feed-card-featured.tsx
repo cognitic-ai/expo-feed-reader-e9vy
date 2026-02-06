@@ -7,7 +7,7 @@ import { FeedItem, formatDate } from "@/lib/rss";
 export default function FeedCardFeatured({ item }: { item: FeedItem }) {
   return (
     <Link href={`/article/${encodeURIComponent(item.id)}`} asChild>
-      <Link.Trigger>
+      <Link.Trigger withAppleZoom>
         <Pressable
           style={({ pressed }) => ({
             opacity: pressed ? 0.9 : 1,
